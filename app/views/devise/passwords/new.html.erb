@@ -1,0 +1,44 @@
+<h2 class="text-center">Восстановление пароля</h2>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "needs-validation", novalidate: true }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+    <%= f.label :email, "Электронная почта", class: "form-label" %>
+    <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", required: true %>
+    <div class="invalid-feedback">
+      Введите email
+    </div>
+  </div>
+
+  <div class="d-grid" style="max-width: 400px; margin: 0 auto;">
+    <%= f.submit "Отправить инструкции", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<div class="text-center mt-3">
+  <%= render "devise/shared/links" %>
+</div>
+
+<script>
+    // Example JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
