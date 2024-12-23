@@ -1,0 +1,88 @@
+<div class="container mt-4">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+      <h2 class="mb-0 display-6"><%= @resume.title %></h2>
+      <% if current_user == @resume.worker %>
+        <div class="btn-group">
+          <%= link_to "Редактировать", edit_resume_path(@resume), class: "btn btn-light" %>
+          <%= button_to @resume.is_active ? "Деактивировать" : "Активировать",
+              toggle_active_resume_path(@resume), 
+              method: :patch,
+              class: "btn btn-#{@resume.is_active ? 'warning' : 'success'} ms-2" %>
+          <%= button_to "Удалить", resume_path(@resume),
+              method: :delete, 
+              data: { confirm: "Вы уверены?" },
+              class: "btn btn-danger ms-2" %>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="card-body p-4">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="text-primary">Status</h5>
+              <span class="badge <%= @resume.is_active ? 'bg-success' : 'bg-secondary' %> fs-6 px-3 py-2">
+                <%= @resume.is_active ? "Активно" : "Деактивировано" %>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary mb-3">Описание</h5>
+            <p class="lead"><%= @resume.description %></p>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary mb-3">Навыки</h5>
+            <div class="d-flex flex-wrap gap-2">
+              <% @resume.skills.split(',').map(&:strip).each do |skill| %>
+                <span class="badge bg-light text-dark border px-3 py-2"><%= skill %></span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary mb-3">Опыт работы</h5>
+            <p class="lead"><%= @resume.experience %></p>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="text-primary mb-3">Образование</h5>
+            <p class="lead"><%= @resume.education %></p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="text-primary mb-3">Персональные данные</h5>
+              <p class="mb-2">
+                <i class="bi bi-person"></i>
+                <strong>Имя:</strong> <%= @resume.worker.name %>
+              </p>
+              <p class="mb-2">
+                <i class="bi bi-calendar"></i>
+                <strong>Возраст:</strong> <%= @resume.worker.age %> years
+              </p>
+              <p class="mb-2">
+                <strong>Ожидаемая зарплата:</strong><br>
+                <%= format_currency(@resume.salary_expectation, @resume.currency) %>
+              </p>
+              <p class="mb-0">
+                <i class="bi bi-envelope"></i>
+                <strong>Контакты:</strong><br>
+                <%= @resume.contact %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Назад", :back, class: "btn btn-secondary" %>
+  </div>
+</div> 

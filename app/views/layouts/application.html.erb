@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Job Job" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>JobJob</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</head>
+<body>
+  <header class="mb-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+      <div class="container-fluid px-5">
+        <div style="width: 100%; max-width: 1320px; margin: 0 auto;" class="d-flex justify-content-between">
+          <%= link_to "JobJob", root_path, class: "navbar-brand" %>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+          <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav me-auto">
+              <%= link_to "Главная", root_path, class: "nav-link #{current_page?(root_path) ? 'active' : ''}" %>
+              <% if user_signed_in? %>
+                <% if current_user.worker? %>
+                  <%= link_to "Мои резюме", my_list_path, class: "nav-link #{current_page?(my_list_path) ? 'active' : ''}" %>
+                  <%= link_to "Создать резюме", new_resume_path, class: "nav-link #{current_page?(new_resume_path) ? 'active' : ''}" %>
+                <% elsif current_user.employer? %>
+                  <%= link_to "Мои вакансии", my_list_path, class: "nav-link #{current_page?(my_list_path) ? 'active' : ''}" %>
+                  <%= link_to "Создать вакансию", new_vacancy_path, class: "nav-link #{current_page?(new_vacancy_path) ? 'active' : ''}" %>
+                <% end %>
+              <% end %>
+            </div>
+            
+            <div class="d-flex align-items-center">
+              <% if user_signed_in? %>
+                <span class="navbar-text me-3"><%= current_user.name %></span>
+                <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+              <% else %>
+                <%= link_to "Войти", new_user_session_path, class: "btn btn-outline-primary me-2" %>
+                <%= link_to "Зарегистрироваться", new_user_registration_path, class: "btn btn-primary" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+  <div style="width: 25%; margin: 0 auto;">
+    <% if notice %>
+      <div class="alert alert-success alert-dismissible fade show text-start" role="alert">
+        <%= notice %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+    
+    <% if alert %>
+      <div class="alert alert-danger alert-dismissible fade show text-start" role="alert">
+        <%= alert %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+  </div>
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
+  <div class="container-fluid px-5">
     <%= yield %>
-  </body>
+  </div>
+</body>
 </html>
