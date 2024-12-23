@@ -36,45 +36,7 @@
         <% end %>
       </div>
       <div class="d-flex justify-content-center mt-4">
-        <nav aria-label="Навигация по страницам">
-          <ul class="pagination">
-            <% if @vacancies&.any? || @resumes&.any? %>
-              <% if @vacancies %>
-                <%= paginate @vacancies, window: 2 do |page| %>
-                  <% if page.first? %>
-                    <li class="page-item <%= 'disabled' if page.current? %>">
-                      <%= link_to_unless page.current?, "Первая", url_for(page: 1), class: "page-link" %>
-                    </li>
-                  <% elsif page.last? %>
-                    <li class="page-item <%= 'disabled' if page.current? %>">
-                      <%= link_to_unless page.current?, "Последняя", url_for(page: page.number), class: "page-link" %>
-                    </li>
-                  <% else %>
-                    <li class="page-item <%= 'active' if page.current? %>">
-                      <%= link_to_unless page.current?, page.number, url_for(page: page.number), class: "page-link" %>
-                    </li>
-                  <% end %>
-                <% end %>
-              <% elsif @resumes %>
-                <%= paginate @resumes, window: 2 do |page| %>
-                  <% if page.first? %>
-                    <li class="page-item <%= 'disabled' if page.current? %>">
-                      <%= link_to_unless page.current?, "Первая", url_for(page: 1), class: "page-link" %>
-                    </li>
-                  <% elsif page.last? %>
-                    <li class="page-item <%= 'disabled' if page.current? %>">
-                      <%= link_to_unless page.current?, "Последняя", url_for(page: page.number), class: "page-link" %>
-                    </li>
-                  <% else %>
-                    <li class="page-item <%= 'active' if page.current? %>">
-                      <%= link_to_unless page.current?, page.number, url_for(page: page.number), class: "page-link" %>
-                    </li>
-                  <% end %>
-                <% end %>
-              <% end %>
-            <% end %>
-          </ul>
-        </nav>
+        <%= paginate @vacancies if @vacancies %>
       </div>
     </section>
   <% elsif current_user.employer? %>
