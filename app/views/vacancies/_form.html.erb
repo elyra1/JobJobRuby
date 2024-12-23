@@ -1,0 +1,63 @@
+<%= form_with(model: vacancy, class: "needs-validation", novalidate: true) do |f| %>
+  <% if vacancy.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(vacancy.errors.count, "ошибка") %> при сохранении вакансии:</h4>
+      <ul>
+        <% vacancy.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :title, "Название вакансии", class: "form-label" %>
+    <%= f.text_field :title, class: "form-control", required: true, maxlength: 80 %>
+    <div class="form-text">До 80 символов</div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :description, "Описание вакансии", class: "form-label" %>
+    <%= f.text_area :description, class: "form-control", rows: 5, required: true, maxlength: 600 %>
+    <div class="form-text">До 600 символов</div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :skills_required, "Требуемые навыки", class: "form-label" %>
+    <%= f.text_area :skills_required, class: "form-control", rows: 3, required: true, maxlength: 400 %>
+    <div class="form-text">До 400 символов</div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <%= f.label :salary_min, "Минимальная зарплата", class: "form-label" %>
+      <%= f.number_field :salary_min, class: "form-control", required: true, min: 100, max: 1000000000 %>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <%= f.label :salary_max, "Максимальная зарплата", class: "form-label" %>
+      <%= f.number_field :salary_max, class: "form-control", required: true, min: 200, max: 1000000000 %>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <%= f.label :currency, "Валюта", class: "form-label" %>
+      <%= f.select :currency, ['RUB', 'USD', 'EUR', 'GBP'], {}, class: "form-select", required: true %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :contact, "Контактная информация", class: "form-label" %>
+    <%= f.text_area :contact, class: "form-control", rows: 2, required: true, maxlength: 100 %>
+    <div class="form-text">До 100 символов</div>
+  </div>
+
+  <div class="mb-3 form-check">
+    <%= f.check_box :is_active, class: "form-check-input" %>
+    <%= f.label :is_active, "Сделать вакансию видимой для соискателей", class: "form-check-label" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Сохранить", class: "btn btn-primary" %>
+    <%= link_to "Отмена", my_list_path, class: "btn btn-secondary" %>
+  </div>
+<% end %> 
