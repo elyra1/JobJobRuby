@@ -1,0 +1,63 @@
+@import "bootstrap";
+
+
+/* Ruby color theme */
+.text-ruby {
+    color: #D2042D;
+}
+
+.btn-ruby {
+    background-color: #D2042D;
+    border-color: #D2042D;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+}
+
+.btn-ruby:hover {
+    background-color: #E66A6A;
+    border-color: #E66A6A;
+    color: #fff;
+}
+
+.border-ruby {
+    border-color: #D2042D !important;
+}
+
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+// For the select element itself
+select.form-select {
+    background-color: #ffffff !important;
+    // Ensure the background is solid when the select is opened
+    &:focus {
+        background-color: #ffffff !important;
+    }
+}
+
+// For the options within the select
+select.form-select option {
+    background-color: #ffffff !important;
+    // This ensures the options themselves are fully opaque
+    opacity: 1 !important;
+}
+
+// For the selected option
+select.form-select option:checked {
+    background-color: #0d6efd !important;  // Bootstrap's primary color
+    color: #ffffff !important;
+}
+
+// For options on hover
+select.form-select option:hover {
+    background-color: #f8f9fa !important;
+}
